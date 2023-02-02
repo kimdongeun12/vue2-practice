@@ -94,6 +94,7 @@ export default {
     onHandleRangeDate(date){
       console.log(date , this.rangeDate[0] , date > this.rangeDate)
       if(date < this.rangeDate[0]){
+        console.log('asss')
         this.rangeDate = [];
       }
       if(this.rangeDate.length >= 2){
@@ -117,8 +118,10 @@ export default {
     rangePositionDate(date) {
       let className = '';
       if(date === this.rangeDate[0]){
+        console.log(date)
         className = 'data-first';
       }else if(date === this.rangeDate[1]){
+        console.log(date)
         className = 'data-last';
       }
       return className;
@@ -155,18 +158,9 @@ export default {
           position: relative;
           display: block;
           width: 100%;
-          padding-bottom: 100%;
           color : #4F5EC6;
           line-height: 46px;
           z-index: 1;
-          span {
-            display: block;
-            width: 100%;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            text-align: center;
-          }
         }
         button:disabled {
           color: #999999;
