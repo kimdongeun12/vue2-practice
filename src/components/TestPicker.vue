@@ -47,7 +47,7 @@ export default class TestPicker extends Vue {
   weekNames: string[] = ["일", "월", "화", "수", "목", "금", "토"];
   todayDate: Date = new Date();
   startDate: Date = new Date("2023/1/12");
-  endDate: Date = new Date("2023/03/11");
+  endDate: Date = new Date("2027/03/11");
   rangeDate: Date[] = [];
   currentCalendar: ICurrentCalendar[] = [];
 
