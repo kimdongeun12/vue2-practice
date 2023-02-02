@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
     <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/> -->
     <TestPicker />
   </div>
@@ -28,5 +27,14 @@ export default class App extends Vue {}
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+ul,
+li {
+  padding: 0;
+  margin: 0;
+}
+button {
+  background-color: transparent;
+  border: 0 none;
 }
 </style>
