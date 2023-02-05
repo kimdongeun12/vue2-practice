@@ -47,7 +47,7 @@ export default class TestPicker extends Vue {
   weekNames: string[] = ["일", "월", "화", "수", "목", "금", "토"];
   todayDate: Date = new Date();
   startDate: Date = new Date("2023/1/12");
-  endDate: Date = new Date("2023/03/11");
+  endDate: Date = new Date("2026/12/11");
   rangeDate: Date[] = [];
   currentCalendar: ICurrentCalendar[] = [];
 
@@ -152,21 +152,15 @@ export default class TestPicker extends Vue {
   }
 }
 
-// interface ICurrentCalendar {
-//   dateTitle: string;
-//   dateStart: number;
-//   dateArr: Date[];
-// }
-
 // export default {
 //   data() {
 //     return {
 //       weekNames: ["일", "월", "화", "수", "목", "금", "토"],
-//       todayDate: new Date() as Date,
-//       startDate: new Date("2023/1/12") as Date,
-//       endDate: new Date("2023/03/11") as Date,
-//       rangeDate: [] as Date[],
-//       currentCalendar: [] as ICurrentCalendar[],
+//       todayDate: new Date(),
+//       startDate: new Date("2023/1/12"),
+//       endDate: new Date("2023/03/11"),
+//       rangeDate: [],
+//       currentCalendar: [],
 //     };
 //   },
 //   mounted() {
@@ -179,7 +173,7 @@ export default class TestPicker extends Vue {
 //     initCalendar: function () {
 //       const startDate = this.startDate; // 현재 날짜가 검사 시작 날짜를 넘지 못했을 경우 : 현재 날짜가 검사 시작 날짜를 넘었을경우
 //       const endDate = this.endDate; // 검사 마지막 날짜
-//       const diffDate = (endDate.getTime() - startDate.getTime()) / 1000; // 두 달의 차이 값
+//       const diffDate = (endDate - startDate) / 1000; // 두 달의 차이 값
 //       const monthCount = Math.round(diffDate / (60 * 60 * 24 * 30)); // 남은 개월수
 //       const tempArr = new Array(monthCount + 1).fill({}); // 개월 수 만큼 배열 공간 만들기
 
@@ -206,7 +200,7 @@ export default class TestPicker extends Vue {
 //           ); // 일자별로 배열에 담기
 //         });
 //         const dateStart = selectDate.getDay(); // 달의 시작 날짜 알아오기;
-//         const tamp: ICurrentCalendar = {
+//         const tamp = {
 //           dateTitle,
 //           dateStart,
 //           dateArr,
@@ -223,7 +217,7 @@ export default class TestPicker extends Vue {
 //         day == date.getDate()
 //       );
 //     },
-//     onHandleRangeDate(date: Date) {
+//     onHandleRangeDate(date) {
 //       // console.log(date, this.rangeDate[0], date > this.rangeDate);
 //       if (date < this.rangeDate[0]) {
 //         this.rangeDate = [];
@@ -242,22 +236,22 @@ export default class TestPicker extends Vue {
 //       this.rangeDate = [...selectArr];
 //       console.log(this.rangeDate);
 //     },
-//     checkDate(date: Date) {
+//     checkDate(date) {
 //       const yseterDate = new Date().setDate(this.todayDate.getDate() - 1);
 //       return (
 //         date >= this.startDate &&
 //         date <= this.endDate &&
 //         date.getDay() !== 0 &&
-//         date.getTime() >= yseterDate
+//         date >= yseterDate
 //       );
 //     },
-//     rangeActiveDate(date: Date) {
+//     rangeActiveDate(date) {
 //       return date >= this.rangeDate[0] && date <= this.rangeDate[1];
 //     },
-//     rangeSelectDate(date: Date) {
+//     rangeSelectDate(date) {
 //       return this.rangeDate.includes(date);
 //     },
-//     rangePositionDate(date: Date) {
+//     rangePositionDate(date) {
 //       let className = "";
 //       if (date === this.rangeDate[0]) {
 //         className += "data-first ";
