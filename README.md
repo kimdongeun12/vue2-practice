@@ -1,5 +1,7 @@
 # vue2-class
 
+vue2 + typescript를 이용하여 간단하게 제작한 에어비앤비 데이트 피커입니다.
+
 ## Project setup
 ```
 npm install
@@ -10,15 +12,3 @@ npm install
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
