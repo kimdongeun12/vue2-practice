@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="section">
     <div id="map" v-on:touchstart="fnMap">맵영역</div>
     <div class="contents"
       v-on:touchstart="fnContentsTouch" 
@@ -73,6 +73,10 @@ export default {
 
 </script>
 <style lang="scss" scoped>
+.section {
+  height: 100vh;
+  overflow: hidden;
+}
 #map {
     position: fixed;
     left: 0;
