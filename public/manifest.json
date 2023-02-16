@@ -3,7 +3,7 @@
   "background_color": "#3eaf7c",
   "display": "standalone",
   "id": "/vue2-practice/",
-  "start_url": "/vue2-practice",
+  "start_url": "/vue2-practice/",
   "name": "vue2-practice",
   "short_name": "practice",
   "icons": [

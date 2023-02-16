@@ -4,6 +4,9 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </nav> -->
+    <router-link to="/">달력보기</router-link>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <router-link to="/about">지도 인터렉션</router-link>
     <router-view/>
   </div>
 </template>
