@@ -34,7 +34,7 @@ export default {
       const contentsEl = document.querySelector('.contents');
       mapEl.style.height = `${((this.deviceHeight / 100) * 80)}px`;
       contentsEl.style.top = `${((this.deviceHeight / 100) * 80)}px`;
-      contentsEl.style.transform = `translateY(0px)`
+      contentsEl.style.overflowY = `hidden`
       this.touchStep = 0;
     },
     fnMiddleContents() {
@@ -42,14 +42,14 @@ export default {
       const contentsEl = document.querySelector('.contents');
       mapEl.style.height = `${((this.deviceHeight / 100) * 31)}px`;
       contentsEl.style.top = `${((this.deviceHeight / 100) * 31)}px`;
-      contentsEl.style.transform = `translateY(0px)`
+      contentsEl.style.overflowY = `hidden`
       this.touchStep = 1;
     },
     fnContents() {
       const contentsEl = document.querySelector('.contents');
-      contentsEl.style.height = `${this.deviceHeight - 55}px`;
       contentsEl.style.top = `55px`;
-      contentsEl.style.transform = `translateY(0px)`
+      contentsEl.style.height = `${this.deviceHeight - 55}px`;
+      contentsEl.style.overflowY = `auto`
       this.touchStep = 2;
     },
     fnContentsTouch(event) {
@@ -67,11 +67,13 @@ export default {
       // mapEl.style.height = `${((this.deviceHeight / 100) * viewportHeight) + touchMove}px`;
     }, 50),
     fnContentsTouchEnd: debounce(function (event) {
+      const contentsEl = document.querySelector('.contents');
       const touchEnd = event.changedTouches[0].screenY;
       const touchMove = this.touchStart - touchEnd;
       if (touchMove === 0) return
+      if (contentsEl.scrollTop > 0 ) return
       const touchDir = this.touchStart > touchEnd ? 'up' : 'down';
-      console.log(touchMove , touchDir , this.touchStep)
+      console.log(touchMove , touchDir , this.touchStep);
       if (touchDir === 'down') {
         this.touchStep = this.touchStep > 0 ? this.touchStep - 1 : this.touchStep;
       }else {
@@ -111,11 +113,13 @@ export default {
 }
 
 .contents {
-  position: relative;
-  z-index: 1;
+  position: fixed;
+  z-index: 5;
+  width: 100%;
   top: 31vh;
   background-color: #ffffff;
   transition: all 0.4s;
+  overflow-y: hidden;
   > div {
     min-height: 100vh;
     background-color: #b1e2ff;
