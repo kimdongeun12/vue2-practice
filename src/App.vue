@@ -4,14 +4,14 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </nav> -->
-    <!-- <div class="nav">
+    <div class="nav">
       <p>
         <router-link to="/">달력보기</router-link>
       </p>
       <p>
         <router-link to="/about">지도 인터렉션</router-link>
       </p>
-    </div> -->
+    </div>
     <router-view/>
   </div>
 </template>
