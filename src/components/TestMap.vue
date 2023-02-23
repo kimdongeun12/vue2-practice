@@ -8,7 +8,6 @@
   </div>
 </template>
 
-<script type="text/javascript" src="/js/common/map/tmap-routing.js"></script><!-- 화면 스크립트 실행 -->
 <script>
 import { debounce } from 'lodash'
 
@@ -26,31 +25,33 @@ export default {
     const htmlEl = document.querySelector('html');
     bodyEl.style.overflowY = 'hidden';
     htmlEl.style.overflowY = 'hidden';
-    // this.initTmap();
+    this.initTmap();
   },
   methods: {
     // 페이지가 로딩이 된 후 호출하는 함수입니다.
-    // initTmap(){
-    //   // map 생성
-    //   // Tmapv3.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
-    //   const el = document.createElement('script');
-    //   el.setAttribute('type', 'text/javascript');
-    //   el.setAttribute('src', 'https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=17lwpsPmg51poJQE2BUcN40a8ubOu6ZM2w7jX7Sa');
-    //   document.getElementsByTagName('head')[0].appendChild(el);
-    //   // onload에 init 메소드 지정
-    //   el.onload = function(){
-    //     const map = new Tmapv2.Map("#map", { // 지도가 생성될 div
-    //       center : new Tmapv2.LatLng(37.56520450, 126.98702028),
-    //       width : "100%", // 지도의 넓이
-    //       height : "400px", // 지도의 높이
-    //       zoom : 17
-    //     });
-    //   };
-    // }, 
+    initTmap(){
+      // map 생성
+      // Tmapv3.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
+      const el = document.createElement('script');
+      el.setAttribute('type', 'text/javascript');
+      el.setAttribute('src', 'https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=17lwpsPmg51poJQE2BUcN40a8ubOu6ZM2w7jX7Sa');
+      document.getElementsByTagName('head')[0].appendChild(el);
+      // onload에 init 메소드 지정
+      el.onload = function(){
+        const map = new window.Tmapv2.Map("#map", { // 지도가 생성될 div
+          center: new window.Tmapv2.LatLng(37.56520450, 126.98702028),
+          width : "100%", // 지도의 넓이
+          height : "400px", // 지도의 높이
+          zoom : 17
+        });
+        console.log(map)
+      };
+    }, 
     fnMap() {
       const mapEl = document.querySelector('#map');
       const contentsEl = document.querySelector('.contents');
       mapEl.style.height = `${((this.deviceHeight / 100) * 80) + 10}px`;
+      contentsEl.scrollTo(0 , 0)
       contentsEl.style.top = `${((this.deviceHeight / 100) * 80)}px`;
       contentsEl.style.overflowY = `hidden`
       this.touchStep = 0;
@@ -73,16 +74,18 @@ export default {
     fnContentsTouch(event) {
       this.touchStart = event.touches[0].screenY;
     },
-    fnContentsTouchMove: debounce((event) => {
+    fnContentsTouchMove (event) {
       // console.log(event)
-      // const touchEnd = event.touches[0].screenY;
-      // const mapEl = document.querySelector('#map');
-      // const contentsEl = document.querySelector('.contents');
-      // const touchMove = touchEnd - this.touchStart;
-      // const viewportHeight = this.touchStep === 1 ? 31 : this.touchStep === 2 && 80;
-      // contentsEl.style.transform = `translateY(${touchMove}px)`
-      // mapEl.style.height = `${((this.deviceHeight / 100) * viewportHeight) + touchMove}px`;
-    }, 50),
+      const mapEl = document.querySelector('#map');
+      const contentsEl = document.querySelector('.contents');
+      const touchEnd = event.touches[0].screenY;
+      const touchMove = touchEnd - this.touchStart;
+      if ((this.touchStep === 2 && touchMove < 0) || (this.touchStep === 0 && touchMove > 0)) return
+      if (contentsEl.scrollTop > 0) return
+      const viewportHeight = this.touchStep === 1 ? 31 : this.touchStep === 2 && 80;
+      mapEl.style.height = `${((this.deviceHeight / 100) * viewportHeight) + touchMove}px`;
+      contentsEl.style.transform = `translateY(${touchMove}px)`
+    },
     fnContentsTouchEnd: debounce(function (event) {
       const contentsEl = document.querySelector('.contents');
       const touchEnd = event.changedTouches[0].screenY;
@@ -90,7 +93,7 @@ export default {
       if (touchMove === 0) return
       if (contentsEl.scrollTop > 0 ) return
       const touchDir = this.touchStart > touchEnd ? 'up' : 'down';
-      console.log(touchMove , touchDir , this.touchStep);
+      contentsEl.style.transform = `translateY(0)`
       if (touchDir === 'down') {
         this.touchStep = this.touchStep > 0 ? this.touchStep - 1 : this.touchStep;
       }else {
@@ -101,8 +104,12 @@ export default {
   watch : {
     touchStep () {
       if (this.touchStep === 0){
+        const contentsEl = document.querySelector('.contents');
+        contentsEl.style.overflowY = `hidden`
         this.fnMap()
       } else if (this.touchStep === 1) {
+        const contentsEl = document.querySelector('.contents');
+        contentsEl.style.overflowY = `hidden`
         this.fnMiddleContents()
       } else if (this.touchStep === 2) {
         this.fnContents()
@@ -126,19 +133,17 @@ export default {
   height: calc(31vh + 10px);
   min-height: 31vh;
   background-color: #999999;
-  transition: all 0.4s;
 }
 
 .contents {
   position: fixed;
   z-index: 5;
   width: 100%;
+  left: 0;
   top: 31vh;
   background-color: #ffffff;
-  transition: all 0.4s;
   overflow-y: hidden;
-
-  >div {
+  > div {
     min-height: 100vh;
     background-color: #b1e2ff;
   }
