@@ -14,6 +14,11 @@ const routes: RouteConfig[] = [
     path: '/about',
     name: 'AboutView',
     component: () => import('@/views/AboutView.vue')
+  },
+  {
+    path: '/inicis',
+    name: 'InicisView',
+    component: () => import('@/views/InicisView.vue')
   }
 ];
 
